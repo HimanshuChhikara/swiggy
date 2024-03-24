@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import RestaurantCard from './RestaurantCard'
 import { API_PATH } from '../Constants/common';
+import { Link } from 'react-router-dom';
 
 const Restaurants = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  console.log("searchText === ", searchText)
+  console.log("Restaurants component ===")
   useEffect(() => {
+    console.log("UseEffect === ")
     fetchData();
-  }, [])
+  },[])
 
   const fetchData = async () => {
     const data = await fetch(
@@ -17,15 +19,16 @@ const Restaurants = () => {
     );
 
     const json = await data.json();
-    setListOfRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFilteredRestaurants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    debugger
+    setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
   }
 
   const onFilter = () => {
     const filteredRes = filteredRestaurants.filter((res) =>
       res.info.name.toLowerCase().includes(searchText.toLowerCase())
-    ); debugger
+    );
     if (searchText == "") {
       setListOfRestaurants(filteredRestaurants);
     }
@@ -34,6 +37,7 @@ const Restaurants = () => {
     }
   }
 
+  console.log("listOfRestaurants ---- ",listOfRestaurants)
   return (
     <div className='body'>
       <div className='filter-flex'>
@@ -60,8 +64,11 @@ const Restaurants = () => {
 
       </div>
       <div className="flex flex-wrap">
-        {listOfRestaurants && listOfRestaurants.map((res) => {
-          return <RestaurantCard data={res.info} cloudinaryImageId={res.info.cloudinaryImageId} />
+        {listOfRestaurants.map((res) => {
+          return 
+          <Link>
+          <RestaurantCard  data={res.info} cloudinaryImageId={res.info.cloudinaryImageId} />
+          </Link>
         })}
       </div>
     </div>

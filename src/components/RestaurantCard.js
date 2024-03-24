@@ -3,6 +3,8 @@ import {CDN_URL} from '../Constants/common';
 
 const RestaurantCard = ({data,cloudinaryImageId}) => {
     const {costForTwo,avgRatingString,cuisines,price,name} = data
+    debugger
+    console.log("data.....",data)
 
     return (
         <div className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200">
